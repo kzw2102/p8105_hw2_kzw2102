@@ -7,5 +7,25 @@ output: github_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+# Load in dataset
+```{r}
+library(readxl)
+
+##just want the "Mr. Trash Wheel" sheet 
+waterwheel_data=
+  read_excel(
+    path="./HealthyHarborWaterWheelTotals2018-7-28.xlsx", 
+    sheet=1
+  )
+
+#clean the data
+waterwheel_data=janitor::clean_names(waterwheel_data)
+
+#omitting non-data entries (rows with notes/figures; columns containing notes) 
+read_excel()
+waterwheel_data
 ```
 
