@@ -1,0 +1,11 @@
+---
+title: "HW 2"
+date: "September 26, 2019"
+author: "Kelly Wang"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
