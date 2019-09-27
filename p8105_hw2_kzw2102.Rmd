@@ -30,9 +30,13 @@ waterwheel_data=
   ) %>%
   janitor::clean_names() %>%
   select(-x15) %>%
-  drop_na()
+  drop_na() %>%
+  mutate(
+    sports_balls=as.integer(round(sports_balls, digits=0))
+  )
 
-#need ot use reasonable variable names
+#need to use reasonable variable names
+# 
 view(waterwheel_data)
 ```
 
