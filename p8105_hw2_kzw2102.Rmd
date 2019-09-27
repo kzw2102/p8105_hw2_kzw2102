@@ -9,8 +9,8 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
-
-# Load in dataset
+# Problem 1
+## Load in Mr. Trash Wheel dataset
 
 * Reads in the the dataset and specifically reads in the Mr. Trash Wheel Sheet
 * Omits non-data entries (rows with notes/figures; columns containing notes)
@@ -26,17 +26,50 @@ library(readxl)
 ##just want the "Mr. Trash Wheel" sheet and clean the data from there
 waterwheel_data=
   read_excel("./HealthyHarborWaterWheelTotals2018-7-28.xlsx", 
-    sheet=1
+    sheet="Mr. Trash Wheel"
   ) %>%
   janitor::clean_names() %>%
   select(-x15) %>%
   drop_na() %>%
   mutate(
-    sports_balls=as.integer(round(sports_balls, digits=0))
-  )
+    sports_balls=as.integer(round(sports_balls, digits=0)) 
+    ) %>%
+  drop_na(dumpster)
 
 #need to use reasonable variable names
-# 
+
 view(waterwheel_data)
+```
+```{r}
+## reading and cleaning Precipitation data for 2017. Adding year 2018 and omitting rows without preciptiation data  
+Precip_2018_data=
+  read_excel("./HealthyHarborWaterWheelTotals2018-7-28.xlsx", 
+    sheet="2018 Precipitation", range="A2:B14"
+  ) %>%
+  janitor::clean_names() %>%
+  mutate(year=2018) %>%
+  filter(!is.na(total))
+
+view(Precip_2018_data)
+## reading and cleaning Precipitation data for 2018
+Precip_2017_data=
+  read_excel("./HealthyHarborWaterWheelTotals2018-7-28.xlsx", 
+    sheet="2017 Precipitation",
+    range="A2:B14"
+  ) %>%
+  janitor::clean_names() %>%
+  mutate(year=2017) %>%
+  filter(!is.na(total))
+
+view(Precip_2017_data)
+
+#stacking/binding to combine the two datasets 
+twoyear_precip_data=
+  bind_rows(Precip_2018_data, Precip_2017_data) %>%
+  mututate(
+    month=month.name(month)
+  )
+
+view(twoyear_precip_data)
 ```
 
