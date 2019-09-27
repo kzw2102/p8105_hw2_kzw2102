@@ -11,21 +11,28 @@ library(tidyverse)
 ```
 
 # Load in dataset
+
+* Reads in the the dataset and specifically reads in the Mr. Trash Wheel Sheet
+* Omits non-data entries (rows with notes/figures; columns containing notes)
+* Uses function read_excel
+* Uses Reasonable Variable names
+* Omit Rows that do not include dumpset-specific data
+* Round the number of sports balls to the nearest integer and converts the result to an integer variable (using as.integer)
+
+
 ```{r}
 library(readxl)
 
-##just want the "Mr. Trash Wheel" sheet 
+##just want the "Mr. Trash Wheel" sheet and clean the data from there
 waterwheel_data=
-  read_excel(
-    path="./HealthyHarborWaterWheelTotals2018-7-28.xlsx", 
+  read_excel("./HealthyHarborWaterWheelTotals2018-7-28.xlsx", 
     sheet=1
-  )
+  ) %>%
+  janitor::clean_names() %>%
+  select(-x15) %>%
+  drop_na()
 
-#clean the data
-waterwheel_data=janitor::clean_names(waterwheel_data)
-
-#omitting non-data entries (rows with notes/figures; columns containing notes) 
-read_excel()
-waterwheel_data
+#need ot use reasonable variable names
+view(waterwheel_data)
 ```
 
