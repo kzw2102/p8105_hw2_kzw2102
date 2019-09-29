@@ -37,8 +37,6 @@ waterwheel_data=
     ) %>%
   drop_na(dumpster)
 
-#need to use reasonable variable names
-
 view(waterwheel_data)
 ```
 ```{r}
@@ -71,8 +69,11 @@ twoyear_precip_data=
   mutate(
     month = month.name[as.numeric(month)]
   )
-
-
 view(twoyear_precip_data)
 ```
+* median number of sports balls in dumpster 2017
+
+In the Mr. Trash Wheel data, multiple information was taken. For example, the number of dumpsters that were filled per month, how much each dumpster weighed (in tons), what was in each dumpster, etc. It was found that between May 2014 and July 2018, a total of `r nrow(waterwheel_data)` dumpsters were collected. An example of an item that was found in each dumpster was sports balls. In the year 2017, the median number of sports balls in dumpster was `r median(pull(waterwheel_data,sports_balls, year==2017))`
+
+It should also be noted that the amount of trash the device receives is highly dependent of rainfall. Dumpsters fill much faster when it rains than when it doesn't. Between 2017 and 2018, a total of `r nrow(twoyear_precip_data)` months were collected.  That being said, the total precipitation in 2017 was `r sum(pull(Precip_2017_data, total))` and the total precipitation in 2018 was `r sum(pull(Precip_2018_data, total))`. 
 
