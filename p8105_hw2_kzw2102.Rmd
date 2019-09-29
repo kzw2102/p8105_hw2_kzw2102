@@ -7,6 +7,7 @@ output: github_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
 library(tidyverse)
 ```
 # Problem 1
@@ -64,11 +65,13 @@ Precip_2017_data=
 view(Precip_2017_data)
 
 #stacking/binding to combine the two datasets 
+month.name
 twoyear_precip_data=
   bind_rows(Precip_2018_data, Precip_2017_data) %>%
-  mututate(
-    month=month.name(month)
+  mutate(
+    month = month.name[as.numeric(month)]
   )
+
 
 view(twoyear_precip_data)
 ```
