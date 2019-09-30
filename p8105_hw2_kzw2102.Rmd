@@ -100,14 +100,34 @@ snp_data=
   read.csv(file="./fivethirtyeight_datasets/snp.csv")%>%
   janitor::clean_names()%>%
   separate(col = date, into =c("month", "day", "year"), sep = "/")%>%
-  select(year, month, day, close)
+  select(year, month, day, close)%>%
+  mutate(
+    month = month.name[as.numeric(month)]
+  ) 
   
   
 #importing unemployment.csv
 unemployment_data=
   read.csv(file="./fivethirtyeight_datasets/unemployment.csv") %>%
-  janitor::clean_names()
+  janitor::clean_names()%>%
+  pivot_longer(
+  jan:dec,
+  names_to = "month",
+  values_to="unemployment rate"
+  ) %>% 
+  mutate(
+    month=month.name[as.numeric(recode(month, "jan" = "January", "feb" = "February", "mar" = "March", "apr"= "April" , "may"= "May", "jun" = "June", "jul" = "July", "aug"="August", "sep" = "September", "oct" = "October", "nov" = "November", "dec" = "December"))]%>%
+    year = as.interger(year)
+)
 
 View(pols_month_data)
 view(unemployment_data)
 view(snp_data)
+
+#merging snp into pols, and then merging unemployment into the result
+join_data = 
+  left_join(pols_month_data, snp_data, by =c( "year","month"))%>%
+  left_join(unemployment_data, by =c( "year","month"))
+
+view(join_data)
+```
