@@ -87,11 +87,12 @@ pols_month_data=
   janitor::clean_names() %>%
   separate(col = mon, into =c("year", "month", "day"), sep = "-")%>%
   month = month.name[as.numeric(month)] %>%
-  mutate(
+   mutate(
     president=c(gop, dem)
   ) %>%
   select(-prez_dem, -prez_gop, -day)
   )
+
 #importing unemployment.csv
 unemployment_data=
   read.csv(file="./fivethirtyeight_datasets/unemployment.csv") %>%
