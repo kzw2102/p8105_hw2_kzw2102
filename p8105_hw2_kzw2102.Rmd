@@ -77,3 +77,17 @@ In the Mr. Trash Wheel data, multiple information was taken. For example, the nu
 
 It should also be noted that the amount of trash the device receives is highly dependent of rainfall. Dumpsters fill much faster when it rains than when it doesn't. Between 2017 and 2018, a total of `r nrow(twoyear_precip_data)` months were collected.  That being said, the total precipitation in 2017 was `r sum(pull(Precip_2017_data, total))` and the total precipitation in 2018 was `r sum(pull(Precip_2018_data, total))`. 
 
+# Problem 2
+```{r}
+# importing three datasets
+#importing pols-month.csv
+pols_month_data=
+  read.csv(file="./fivethirtyeight_datasets/pols-month.csv")
+#importing unemployment.csv
+unemployment_data=
+  read.csv(file="./fivethirtyeight_datasets/unemployment.csv")
+#importing snp.csv 
+snp_data=
+  read.csv(file="./fivethirtyeight_datasets/snp.csv")
+```
+
