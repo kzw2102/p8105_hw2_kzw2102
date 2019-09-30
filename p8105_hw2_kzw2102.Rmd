@@ -86,20 +86,26 @@ pols_month_data=
   read.csv(file="./fivethirtyeight_datasets/pols-month.csv")%>%
   janitor::clean_names() %>%
   separate(col = mon, into =c("year", "month", "day"), sep = "-")%>%
-  month = month.name[as.numeric(month)] %>%
-   mutate(
-    president=c(gop, dem)
+  mutate(
+    month = month.name[as.numeric(month)]
   ) %>%
-  select(-prez_dem, -prez_gop, -day)
-  )
-
-#importing unemployment.csv
-unemployment_data=
-  read.csv(file="./fivethirtyeight_datasets/unemployment.csv") %>%
-  janitor::clean_names()
+  pivot_longer(
+  starts_with("prez"),
+  values_to= "president"
+  ) %>% 
+  select(-day)
+  
 #importing snp.csv 
 snp_data=
   read.csv(file="./fivethirtyeight_datasets/snp.csv")%>%
+  janitor::clean_names()%>%
+  separate(col = date, into =c("month", "day", "year"), sep = "/")%>%
+  select(year, month, day, close)
+  
+  
+#importing unemployment.csv
+unemployment_data=
+  read.csv(file="./fivethirtyeight_datasets/unemployment.csv") %>%
   janitor::clean_names()
 
 View(pols_month_data)
