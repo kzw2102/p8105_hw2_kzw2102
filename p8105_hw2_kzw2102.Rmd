@@ -73,21 +73,34 @@ view(twoyear_precip_data)
 ```
 * median number of sports balls in dumpster 2017
 
-In the Mr. Trash Wheel data, multiple information was taken. For example, the number of dumpsters that were filled per month, how much each dumpster weighed (in tons), what was in each dumpster, etc. It was found that between May 2014 and July 2018, a total of `r nrow(waterwheel_data)` dumpsters were collected. An example of an item that was found in each dumpster was sports balls. In the year 2017, the median number of sports balls in dumpster was `r median(pull(waterwheel_data,sports_balls, year==2017))`
+In the Mr. Trash Wheel data, multiple information was taken. For example, the number of dumpsters that were filled per month, how much each dumpster weighed (in tons), what was in each dumpster, etc. It was found that between May 2014 and July 2018, a total of `r nrow(waterwheel_data)` dumpsters were collected. An example of an item that was found in each dumpster was sports balls. In the year 2017, the median number of sports balls in dumpster was `r filter(waterwheel_data, year==2017) %>% pull(sports_balls) %>% median()`
 
 It should also be noted that the amount of trash the device receives is highly dependent of rainfall. Dumpsters fill much faster when it rains than when it doesn't. Between 2017 and 2018, a total of `r nrow(twoyear_precip_data)` months were collected.  That being said, the total precipitation in 2017 was `r sum(pull(Precip_2017_data, total))` and the total precipitation in 2018 was `r sum(pull(Precip_2018_data, total))`. 
 
+```
 # Problem 2
 ```{r}
 # importing three datasets
-#importing pols-month.csv
+#importing pols-month.csv and cleaning
 pols_month_data=
-  read.csv(file="./fivethirtyeight_datasets/pols-month.csv")
+  read.csv(file="./fivethirtyeight_datasets/pols-month.csv")%>%
+  janitor::clean_names() %>%
+  separate(col = mon, into =c("year", "month", "day"), sep = "-")%>%
+  month = month.name[as.numeric(month)] %>%
+  mutate(
+    president=c(gop, dem)
+  ) %>%
+  select(-prez_dem, -prez_gop, -day)
+  )
 #importing unemployment.csv
 unemployment_data=
-  read.csv(file="./fivethirtyeight_datasets/unemployment.csv")
+  read.csv(file="./fivethirtyeight_datasets/unemployment.csv") %>%
+  janitor::clean_names()
 #importing snp.csv 
 snp_data=
-  read.csv(file="./fivethirtyeight_datasets/snp.csv")
-```
+  read.csv(file="./fivethirtyeight_datasets/snp.csv")%>%
+  janitor::clean_names()
 
+View(pols_month_data)
+view(unemployment_data)
+view(snp_data)
