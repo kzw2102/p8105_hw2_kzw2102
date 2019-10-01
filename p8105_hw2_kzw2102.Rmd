@@ -26,11 +26,10 @@ library(readxl)
 
 ##just want the "Mr. Trash Wheel" sheet and clean the data from there
 waterwheel_data=
-  read_excel("./Trash-Wheel-Collection-Totals-8-6-19.xlsx", 
-    sheet="Mr. Trash Wheel"
+  read_excel("./data/Trash-Wheel-Collection-Totals-8-6-19.xlsx", 
+    sheet="Mr. Trash Wheel", range="A2:N408"
   ) %>%
   janitor::clean_names() %>%
-  select(-x15) %>%
   drop_na() %>%
   mutate(
     sports_balls=as.integer(round(sports_balls, digits=0)) 
@@ -42,7 +41,7 @@ view(waterwheel_data)
 ```{r}
 ## reading and cleaning Precipitation data for 2017. Adding year 2018 and omitting rows without preciptiation data  
 Precip_2018_data=
-  read_excel("./Trash-Wheel-Collection-Totals-8-6-19.xlsx", 
+  read_excel("./data/Trash-Wheel-Collection-Totals-8-6-19.xlsx", 
     sheet="2018 Precipitation", range="A2:B14"
   ) %>%
   janitor::clean_names() %>%
@@ -52,7 +51,7 @@ Precip_2018_data=
 view(Precip_2018_data)
 ## reading and cleaning Precipitation data for 2018
 Precip_2017_data=
-  read_excel("./Trash-Wheel-Collection-Totals-8-6-19.xlsx", 
+  read_excel("./data/Trash-Wheel-Collection-Totals-8-6-19.xlsx", 
     sheet="2017 Precipitation",
     range="A2:B14"
   ) %>%
@@ -83,7 +82,7 @@ It should also be noted that the amount of trash the device receives is highly d
 # importing three datasets
 #importing pols-month.csv and cleaning
 pols_month_data=
-  read.csv(file="./fivethirtyeight_datasets/pols-month.csv")%>%
+  read.csv(file="./data/fivethirtyeight_datasets/pols-month.csv")%>%
   janitor::clean_names() %>%
   separate(col = mon, into =c("year", "month", "day"), sep = "-")%>%
   mutate(
@@ -97,7 +96,7 @@ pols_month_data=
   
 #importing snp.csv 
 snp_data=
-  read.csv(file="./fivethirtyeight_datasets/snp.csv")%>%
+  read.csv(file="./data/fivethirtyeight_datasets/snp.csv")%>%
   janitor::clean_names()%>%
   separate(col = date, into =c("month", "day", "year"), sep = "/")%>%
   select(year, month, day, close)%>%
@@ -108,7 +107,7 @@ snp_data=
   
 #importing unemployment.csv
 unemployment_data=
-  read.csv(file="./fivethirtyeight_datasets/unemployment.csv") %>%
+  read.csv(file="./data/fivethirtyeight_datasets/unemployment.csv") %>%
   janitor::clean_names()%>%
   pivot_longer(
   jan:dec,
