@@ -30,7 +30,6 @@ waterwheel_data=
     sheet="Mr. Trash Wheel", range="A2:N408"
   ) %>%
   janitor::clean_names() %>%
-  drop_na() %>%
   mutate(
     sports_balls=as.integer(round(sports_balls, digits=0)) 
     ) %>%
@@ -62,7 +61,6 @@ Precip_2017_data=
 view(Precip_2017_data)
 
 #stacking/binding to combine the two datasets 
-month.name
 twoyear_precip_data=
   bind_rows(Precip_2018_data, Precip_2017_data) %>%
   mutate(
@@ -81,22 +79,23 @@ It should also be noted that the amount of trash the device receives is highly d
 ```{r}
 # importing three datasets
 #importing pols-month.csv and cleaning
-pols_month_data=
-  read.csv(file="./data/fivethirtyeight_datasets/pols-month.csv")%>%
+pols_month_data =
+  read_csv(file = "./data/fivethirtyeight_datasets/pols-month.csv") %>%
   janitor::clean_names() %>%
   separate(col = mon, into =c("year", "month", "day"), sep = "-")%>%
   mutate(
     month = month.name[as.numeric(month)]
   ) %>%
   pivot_longer(
-  starts_with("prez"),
-  values_to= "president"
+    starts_with("prez"),
+    values_to= "president"
   ) %>% 
   select(-day)
   
+View(pols_month_data)
 #importing snp.csv 
 snp_data=
-  read.csv(file="./data/fivethirtyeight_datasets/snp.csv")%>%
+  read_csv(file="./data/fivethirtyeight_datasets/snp.csv")%>%
   janitor::clean_names()%>%
   separate(col = date, into =c("month", "day", "year"), sep = "/")%>%
   select(year, month, day, close)%>%
@@ -107,7 +106,7 @@ snp_data=
   
 #importing unemployment.csv
 unemployment_data=
-  read.csv(file="./data/fivethirtyeight_datasets/unemployment.csv") %>%
+  read_csv(file="./data/fivethirtyeight_datasets/unemployment.csv") %>%
   janitor::clean_names()%>%
   pivot_longer(
   jan:dec,
@@ -118,7 +117,6 @@ unemployment_data=
     month=month.name[as.numeric(recode(month, "jan" = "January", "feb" = "February", "mar" = "March", "apr"= "April" , "may"= "May", "jun" = "June", "jul" = "July", "aug"="August", "sep" = "September", "oct" = "October", "nov" = "November", "dec" = "December"))]
 )
 
-View(pols_month_data)
 view(unemployment_data)
 view(snp_data)
 
