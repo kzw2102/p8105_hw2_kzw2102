@@ -26,7 +26,7 @@ library(readxl)
 
 ##just want the "Mr. Trash Wheel" sheet and clean the data from there
 waterwheel_data=
-  read_excel("./HealthyHarborWaterWheelTotals2018-7-28.xlsx", 
+  read_excel("./Trash-Wheel-Collection-Totals-8-6-19.xlsx", 
     sheet="Mr. Trash Wheel"
   ) %>%
   janitor::clean_names() %>%
@@ -42,7 +42,7 @@ view(waterwheel_data)
 ```{r}
 ## reading and cleaning Precipitation data for 2017. Adding year 2018 and omitting rows without preciptiation data  
 Precip_2018_data=
-  read_excel("./HealthyHarborWaterWheelTotals2018-7-28.xlsx", 
+  read_excel("./Trash-Wheel-Collection-Totals-8-6-19.xlsx", 
     sheet="2018 Precipitation", range="A2:B14"
   ) %>%
   janitor::clean_names() %>%
@@ -52,7 +52,7 @@ Precip_2018_data=
 view(Precip_2018_data)
 ## reading and cleaning Precipitation data for 2018
 Precip_2017_data=
-  read_excel("./HealthyHarborWaterWheelTotals2018-7-28.xlsx", 
+  read_excel("./Trash-Wheel-Collection-Totals-8-6-19.xlsx", 
     sheet="2017 Precipitation",
     range="A2:B14"
   ) %>%
@@ -116,8 +116,7 @@ unemployment_data=
   values_to="unemployment rate"
   ) %>% 
   mutate(
-    month=month.name[as.numeric(recode(month, "jan" = "January", "feb" = "February", "mar" = "March", "apr"= "April" , "may"= "May", "jun" = "June", "jul" = "July", "aug"="August", "sep" = "September", "oct" = "October", "nov" = "November", "dec" = "December"))]%>%
-    year = as.interger(year)
+    month=month.name[as.numeric(recode(month, "jan" = "January", "feb" = "February", "mar" = "March", "apr"= "April" , "may"= "May", "jun" = "June", "jul" = "July", "aug"="August", "sep" = "September", "oct" = "October", "nov" = "November", "dec" = "December"))]
 )
 
 View(pols_month_data)
