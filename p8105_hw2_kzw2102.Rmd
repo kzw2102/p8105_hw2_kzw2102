@@ -84,13 +84,16 @@ pols_month_data =
   janitor::clean_names() %>%
   separate(col = mon, into =c("year", "month", "day"), sep = "-")%>%
   mutate(
-    month = month.name[as.numeric(month)]
+    month = month.name[as.numeric(month)],
+      year=as.integer(year)
   ) %>%
   pivot_longer(
     starts_with("prez"),
     values_to= "president"
   ) %>% 
-  select(-day)
+  select(-day) %>% 
+  arrange(year, month, desc(year)
+  )
   
 View(pols_month_data)
 #importing snp.csv 
@@ -100,8 +103,11 @@ snp_data=
   separate(col = date, into =c("month", "day", "year"), sep = "/")%>%
   select(year, month, day, close)%>%
   mutate(
-    month = month.name[as.numeric(month)]
-  ) 
+    month = month.name[as.numeric(month)], 
+      year=as.integer(year)
+  ) %>% 
+  arrange(year, month, desc(year)
+  )
   
   
 #importing unemployment.csv
@@ -114,8 +120,11 @@ unemployment_data=
   values_to="unemployment rate"
   ) %>% 
   mutate(
-    month=month.name[as.numeric(recode(month, "jan" = "January", "feb" = "February", "mar" = "March", "apr"= "April" , "may"= "May", "jun" = "June", "jul" = "July", "aug"="August", "sep" = "September", "oct" = "October", "nov" = "November", "dec" = "December"))]
-)
+    month=recode(month, "jan" = "January", "feb" = "February", "mar" = "March", "apr"= "April" , "may"= "May", "jun" = "June", "jul" = "July", "aug"="August", "sep" = "September", "oct" = "October", "nov" = "November", "dec" = "December"), 
+      year=as.integer(year)
+) %>% 
+  arrange(year, month, desc(year)
+  )
 
 view(unemployment_data)
 view(snp_data)
@@ -127,3 +136,6 @@ join_data =
 
 view(join_data)
 ```
+The following datasets include rate of unemployment per specific months of a specific year, data on the number of natioanl politicians who were either democratic or republican within a given time, and information related to the stock market index (S&P). These three data sets were combined based off of the year and month, and were joined via left-join feature. The resulting data contains `r nrow(join_data)` rows and `r ncol(join_data)` columns. The resulting data set contains years between `r min(pull(join_data,year))` and `r max(pull(join_data,year))`. (`r range(pull(join_data, year))`. 
+
+# Problem 3
