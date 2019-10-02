@@ -139,3 +139,9 @@ view(join_data)
 The following datasets include rate of unemployment per specific months of a specific year, data on the number of natioanl politicians who were either democratic or republican within a given time, and information related to the stock market index (S&P). These three data sets were combined based off of the year and month, and were joined via left-join feature. The resulting data contains `r nrow(join_data)` rows and `r ncol(join_data)` columns. The resulting data set contains years between `r min(pull(join_data,year))` and `r max(pull(join_data,year))`. (`r range(pull(join_data, year))`. 
 
 # Problem 3
+```{r}
+baby_names_data=
+  read_csv(file="./data/Popular_Baby_Names.csv") %>% 
+  janitor::clean_names()
+```
+
