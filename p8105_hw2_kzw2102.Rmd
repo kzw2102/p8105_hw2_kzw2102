@@ -21,7 +21,7 @@ library(tidyverse)
 * Round the number of sports balls to the nearest integer and converts the result to an integer variable (using as.integer)
 
 
-```{r}
+```{r trashwheel}
 library(readxl)
 
 ##just want the "Mr. Trash Wheel" sheet and clean the data from there
@@ -38,7 +38,7 @@ waterwheel_data=
 view(waterwheel_data)
 ```
 ## Reading and Cleaning Precipitation data for 2017 and 2018
-```{r}
+```{r precipitation}
 ## reading and cleaning Precipitation data for 2017. Adding year 2018 and omitting rows without preciptiation data  
 Precip_2018_data=
   read_excel("./data/Trash-Wheel-Collection-Totals-8-6-19.xlsx", 
@@ -76,7 +76,7 @@ In the Mr. Trash Wheel data, multiple information was taken. For example, the nu
 It should also be noted that the amount of trash the device receives is highly dependent of rainfall. Dumpsters fill much faster when it rains than when it doesn't. Between 2017 and 2018, a total of `r nrow(twoyear_precip_data)` months were collected.  That being said, the total precipitation in 2017 was `r sum(pull(Precip_2017_data, total))` and the total precipitation in 2018 was `r sum(pull(Precip_2018_data, total))`. 
 
 # Problem 2
-```{r}
+```{r fivethirtyeight}
 # importing three datasets
 #importing pols-month.csv and cleaning
 pols_month_data =
@@ -144,7 +144,7 @@ The following datasets include rate of unemployment per specific months of a spe
 * made sure categorical predictors are consistent
 * makes sure all the case structures are the same (changed to all caps)
 * remove duplicated items
-```{r}
+```{r babynames}
 library(dplyr)
 
 baby_names_data=
@@ -160,6 +160,20 @@ baby_names_data=
 view(baby_names_data)
 ```
 ## Most Popular Female Baby Name Over Time
+```{r}
+olivia_df=
+  filter(baby_names_data, childs_first_name =="olivia") %>% 
+  select(ethnicity, year_of_birth, rank) %>% 
+  pivot_wider(
+    names_from = "year_of_birth",
+    values_from = "rank"
+  )
+
+view(olivia_df)
+
+knitr::kable(olivia_df)
+```
 
 ## Most Popular Boy Baby Name OVer Time 
 
+```
