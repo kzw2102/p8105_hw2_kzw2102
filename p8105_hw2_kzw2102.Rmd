@@ -175,7 +175,7 @@ knitr::kable(olivia_df)
 ```
 
 ## Most Popular Boy Baby Name Over Time 
-```{r}
+```{r popular_baby_names}
 finding_popular_boy_name_df=
   filter(baby_names_data, gender =="MALE", rank=="1")
 
@@ -191,5 +191,11 @@ view(pop_boy_name_df)
 
 knitr::kable(pop_boy_name_df)
 ```
+## Creating a Scatter Plot Showing the Number of Children with a name (y axis) against the rank in popularity of that name (x axis)
+```{r scatterplots}
+scatter_df=
+  filter(baby_names_data, gender== "MALE", ethnicity =="WHITE NON HISPANIC", year_of_birth == "2016")
 
+ggplot(scatter_df, aes(x= childs_first_name, y=rank))
 ```
+ 
