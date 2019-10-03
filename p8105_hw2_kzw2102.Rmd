@@ -175,16 +175,12 @@ knitr::kable(olivia_df)
 
 ## Most Popular Boy Baby Name Over Time 
 ```{r popular_baby_names}
-finding_popular_boy_name_df=
-  filter(baby_names_data, gender =="MALE", rank=="1")
-
-#see that Jayden is the most common
 pop_boy_name_df=
-  filter(baby_names_data, childs_first_name=="jayden") %>% 
-  select(ethnicity, year_of_birth, rank) %>% 
+  filter(baby_names_data, gender =="MALE", rank=="1")%>% 
+  select(ethnicity, year_of_birth, childs_first_name) %>% 
   pivot_wider(
     names_from = "year_of_birth",
-    values_from = "rank"
+    values_from = "childs_first_name"
   )
 view(pop_boy_name_df)
 
