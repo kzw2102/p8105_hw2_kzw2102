@@ -69,7 +69,6 @@ twoyear_precip_data=
   )
 view(twoyear_precip_data)
 ```
-* median number of sports balls in dumpster 2017
 
 In the Mr. Trash Wheel data, multiple information was taken. For example, the number of dumpsters that were filled per month, how much each dumpster weighed (in tons), what was in each dumpster, etc. It was found that between May 2014 and July 2018, a total of `r nrow(waterwheel_data)` dumpsters were collected. An example of an item that was found in each dumpster was sports balls. In the year 2017, the median number of sports balls in dumpster was `r filter(waterwheel_data, year==2017) %>% pull(sports_balls) %>% median()`
 
@@ -191,11 +190,12 @@ view(pop_boy_name_df)
 
 knitr::kable(pop_boy_name_df)
 ```
-## Creating a Scatter Plot Showing the Number of Children with a name (y axis) against the rank in popularity of that name (x axis)
+
+# Creating a Scatter Plot Showing the Number of Children with a name (y axis) against the rank in popularity of that name (x axis)
 ```{r scatterplots}
 scatter_df=
   filter(baby_names_data, gender== "MALE", ethnicity =="WHITE NON HISPANIC", year_of_birth == "2016")
 
-ggplot(scatter_df, aes(x = childs_first_name, y=rank)) + geom_point()+theme(axis.text.x= element_text(angle=45))
+ggplot(scatter_df, aes(x = rank, y=count)) + geom_point()+theme(axis.text.x= element_text(angle=45))
 ```
  
